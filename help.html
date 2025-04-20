@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help - PDF Editor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .main-content {
+            align-items: flex-start;
+        }
+        
+        .container {
+            background-color: #1f1f3a;
+            margin-bottom: 40px;
+        }
+        
+        .page-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #b0b0b0;
+            font-size: 1.1rem;
+        }
+        
+        /* Table of Contents Styling */
+        .toc {
+            background-color: #272744;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0 30px;
+        }
+        
+        .toc h2 {
+            color: #00b4ab;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .toc-list {
+            list-style: none;
+        }
+        
+        .toc-list li {
+            margin-bottom: 12px;
+        }
+        
+        .toc-list a {
+            color: #e1e1e1;
+            text-decoration: none;
+            display: block;
+            padding: 8px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .toc-list a:hover {
+            background-color: rgba(0, 180, 171, 0.1);
+            color: #00b4ab;
+        }
+        
+        /* Help Section Styling */
+        .help-section {
+            margin-bottom: 40px;
+            scroll-margin-top: 100px; /* For smooth scrolling to anchors */
+        }
+        
+        .help-section h2 {
+            color: #00b4ab;
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+            border-bottom: 1px solid #333355;
+            padding-bottom: 10px;
+        }
+        
+        .help-section h3 {
+            color: #e1e1e1;
+            margin: 25px 0 15px;
+            font-size: 1.3rem;
+        }
+        
+        .help-section p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+            color: #e1e1e1;
+        }
+        
+        .step-list {
+            list-style: none;
+            counter-reset: step-counter;
+            margin: 20px 0;
+        }
+        
+        .step-list li {
+            position: relative;
+            padding: 15px 0 15px 50px;
+            border-bottom: 1px solid #272744;
+        }
+        
+        .step-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .step-list li::before {
+            content: counter(step-counter);
+            counter-increment: step-counter;
+            position: absolute;
+            left: 0;
+            top: 13px;
+            width: 35px;
+            height: 35px;
+            background-color: #00b4ab;
+            color: #1f1f3a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .tip-box {
+            background-color: rgba(0, 180, 171, 0.1);
+            border-left: 4px solid #00b4ab;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .tip-box h4 {
+            color: #00b4ab;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .tip-box h4::before {
+            content: '💡';
+            margin-right: 8px;
+        }
+        
+        .tip-box p {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+        
+        .tip-box p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .warning-box {
+            background-color: rgba(255, 100, 100, 0.1);
+            border-left: 4px solid #ff6464;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .warning-box h4 {
+            color: #ff6464;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .warning-box h4::before {
+            content: '⚠️';
+            margin-right: 8px;
+        }
+        
+        .warning-box p {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+        
+        .warning-box p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .image-container {
+            background-color: #272744;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+        
+        .image-caption {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+        
+        .faq-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #272744;
+            padding-bottom: 20px;
+        }
+        
+        .faq-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .faq-question {
+            color: #00b4ab;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: #00b4ab;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1f1f3a;
+            font-size: 1.5rem;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Code snippet styling */
+        .code-block {
+            background-color: #141428;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin: 15px 0;
+            font-family: monospace;
+            overflow-x: auto;
+            color: #e1e1e1;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            📄 <span>PDF Editor</span>
+        </a>
+        <button class="navbar-toggle" id="navbarToggle">☰</button>
+        <ul class="navbar-menu" id="navbarMenu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="help.html">Help</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>Help & User Guide</h1>
+                <p class="subtitle">Learn how to use PDF Editor effectively</p>
+            </div>
+            
+            <!-- Table of Contents -->
+            <div class="toc">
+                <h2>Table of Contents</h2>
+                <ul class="toc-list">
+                    <li><a href="#getting-started">Getting Started</a></li>
+                    <li><a href="#merging-pdfs">Merging PDF Files</a></li>
+                    <li><a href="#splitting-pdfs">Splitting PDF Files</a></li>
+                    <li><a href="#page-ranges">Working with Page Ranges</a></li>
+                    <li><a href="#browser-compatibility">Browser Compatibility</a></li>
+                    <li><a href="#faq">Frequently Asked Questions</a></li>
+                </ul>
+            </div>
+            
+            <!-- Getting Started Section -->
+            <div id="getting-started" class="help-section">
+                <h2>Getting Started</h2>
+                <p>
+                    PDF Editor is a browser-based tool that allows you to perform common PDF operations
+                    directly in your web browser without installing any software or uploading files to a server. 
+                    The application has two main features:
+                </p>
+                
+                <ul style="margin-left: 20px; margin-bottom: 20px; list-style-type: disc;">
+                    <li>Merging multiple PDF files into a single document</li>
+                    <li>Splitting a PDF by extracting specific pages or page ranges</li>
+                </ul>
+                
+                <p>
+                    To get started, simply choose the operation you want to perform by clicking on 
+                    the corresponding tab at the top of the page.
+                </p>
+                
+                <div class="tip-box">
+                    <h4>Browser-based Processing</h4>
+                    <p>All PDF operations happen directly in your browser. Your files are never uploaded to any server, ensuring complete privacy and security.</p>
+                </div>
+            </div>
+            
+            <!-- Merging PDFs Section -->
+            <div id="merging-pdfs" class="help-section">
+                <h2>Merging PDF Files</h2>
+                <p>
+                    Merging PDFs allows you to combine multiple documents into a single file. This is 
+                    useful for creating reports, compiling documentation, or organizing related materials.
+                </p>
+                
+                <h3>How to Merge PDFs</h3>
+                
+                <ol class="step-list">
+                    <li>Go to the "Merge PDFs" tab on the home page</li>
+                    <li>Upload multiple PDF files by either:
+                        <ul style="margin-top: 10px; margin-left: 20px; list-style-type: disc;">
+                            <li>Clicking on the upload area and selecting files</li>
+                            <li>Dragging and dropping PDFs into the upload area</li>
+                        </ul>
+                    </li>
+                    <li>Verify that all the files you want to merge appear in the list below the upload area</li>
+                    <li>If needed, remove any files you don't want to include by clicking the "Remove" button next to each file</li>
+                    <li>Click the "Merge PDFs" button to combine the files</li>
+                    <li>The merged PDF will be automatically downloaded to your device</li>
+                </ol>
+                
+                <div class="tip-box">
+                    <h4>Pro Tip</h4>
+                    <p>The order in which you upload files determines the order they'll appear in the final merged document.</p>
+                    <p>To rearrange files, remove them and upload them again in your preferred order.</p>
+                </div>
+                
+                <div class="warning-box">
+                    <h4>Note</h4>
+                    <p>The size of files you can process depends on your browser's capabilities and your device's memory.</p>
+                    <p>Only PDF files (.pdf) are supported.</p>
+                </div>
+            </div>
+            
+            <!-- Splitting PDFs Section -->
+            <div id="splitting-pdfs" class="help-section">
+                <h2>Splitting PDF Files</h2>
+                <p>
+                    The split feature allows you to extract specific pages or ranges of pages from a PDF document.
+                    This is useful when you only need portions of a larger document.
+                </p>
+                
+                <h3>How to Split a PDF</h3>
+                
+                <ol class="step-list">
+                    <li>Go to the "Split PDF" tab on the home page</li>
+                    <li>Upload a PDF file by either:
+                        <ul style="margin-top: 10px; margin-left: 20px; list-style-type: disc;">
+                            <li>Clicking on the upload area and selecting the file</li>
+                            <li>Dragging and dropping the PDF into the upload area</li>
+                        </ul>
+                    </li>
+                    <li>After uploading, you'll see the total number of pages in the document</li>
+                    <li>Choose one of the extraction options:
+                        <ul style="margin-top: 10px; margin-left: 20px; list-style-type: disc;">
+                            <li><strong>Custom Page Selection</strong>: Extract specific pages or page ranges</li>
+                            <li><strong>Extract All Pages</strong>: Create individual PDF files for each page</li>
+                        </ul>
+                    </li>
+                    <li>If you selected "Custom Page Selection", enter the pages you want to extract in the input field</li>
+                    <li>Click the "Split PDF" button to extract the pages</li>
+                    <li>The extracted PDF(s) will be automatically downloaded to your device</li>
+                </ol>
+                
+                <div class="tip-box">
+                    <h4>Extracting All Pages</h4>
+                    <p>When you extract all pages, the result will be downloaded as a ZIP file containing individual PDFs for each page.</p>
+                </div>
+            </div>
+            
+            <!-- Page Ranges Section -->
+            <div id="page-ranges" class="help-section">
+                <h2>Working with Page Ranges</h2>
+                <p>
+                    When splitting a PDF, you can specify which pages to extract using various formats:
+                </p>
+                
+                <h3>Page Range Examples</h3>
+                
+                <div class="code-block">
+                    # Individual pages
+                    1,3,5
+                    
+                    # Page ranges (inclusive)
+                    1-5
+                    
+                    # Combination of individual pages and ranges
+                    1,3,5-7,10-15
+                </div>
+                
+                <p>Here's what each format means:</p>
+                
+                <ul style="margin-left: 20px; margin-bottom: 20px; list-style-type: disc;">
+                    <li><strong>Individual Pages</strong>: Specify page numbers separated by commas (e.g., 1,3,5)</li>
+                    <li><strong>Page Ranges</strong>: Specify a range of pages using a hyphen (e.g., 1-5 extracts pages 1,2,3,4,5)</li>
+                    <li><strong>Combined Format</strong>: Use both individual pages and ranges together (e.g., 1,3,5-7,10-15)</li>
+                </ul>
+                
+                <div class="tip-box">
+                    <h4>Page Numbering</h4>
+                    <p>Page numbers start at 1 (not 0).</p>
+                    <p>If you specify page numbers beyond the total pages in the document, those invalid pages will be ignored.</p>
+                </div>
+            </div>
+            
+            <!-- Browser Compatibility Section -->
+            <div id="browser-compatibility" class="help-section">
+                <h2>Browser Compatibility</h2>
+                <p>
+                    PDF Editor works best with modern browsers that support the latest web standards. For the best experience, we recommend using:
+                </p>
+                
+                <ul style="margin-left: 20px; margin-bottom: 20px; list-style-type: disc;">
+                    <li>Google Chrome (latest version)</li>
+                    <li>Mozilla Firefox (latest version)</li>
+                    <li>Microsoft Edge (latest version)</li>
+                    <li>Safari (latest version)</li>
+                </ul>
+                
+                <div class="warning-box">
+                    <h4>Large Files</h4>
+                    <p>Browser-based processing has limitations when handling very large PDF files. If you're working with files larger than 100MB, you might experience performance issues or memory errors depending on your device.</p>
+                </div>
+            </div>
+            
+            <!-- FAQ Section -->
+            <div id="faq" class="help-section">
+                <h2>Frequently Asked Questions</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Is my data secure?</div>
+                    <p>
+                        Yes, PDF Editor processes all files directly in your browser. Your files are never uploaded to 
+                        any server or stored anywhere except temporarily in your browser's memory during processing.
+                        All processing happens on your own device, ensuring complete privacy.
+                    </p>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What's the maximum file size I can process?</div>
+                    <p>
+                        The maximum file size depends on your browser and device memory. Most modern browsers can 
+                        handle PDFs up to 100MB, but performance may vary.
+                    </p>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Can I edit the content of PDF files?</div>
+                    <p>
+                        Currently, PDF Editor only supports merging and splitting PDFs. Content editing
+                        features like text modification, image insertion, or form filling are not available.
+                    </p>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Can I use PDF Editor offline?</div>
+                    <p>
+                        No, PDF Editor requires an internet connection to load the necessary libraries. 
+                        However, once loaded, the processing of your PDFs happens entirely on your device.
+                    </p>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Can I use PDF Editor on my mobile device?</div>
+                    <p>
+                        Yes, PDF Editor works on all modern devices including desktops, laptops, tablets, and
+                        smartphones. The responsive design adapts to your screen size for optimal usability.
+                        However, keep in mind that processing large files on mobile devices might be slower.
+                    </p>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How many PDFs can I merge at once?</div>
+                    <p>
+                        There is no specific limit on the number of PDFs you can merge, but the total size and
+                        complexity of the files may be limited by your browser's performance and your device's memory.
+                    </p>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Will the quality of my PDFs be reduced?</div>
+                    <p>
+                        No, PDF Editor maintains the original quality of your documents. There is no compression or 
+                        quality reduction applied during the merging or splitting process.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <a href="#" class="back-to-top" id="backToTop">↑</a>
+
+    <script>
+        // Navbar Toggle Script
+        const navbarToggle = document.getElementById('navbarToggle');
+        const navbarMenu = document.getElementById('navbarMenu');
+        
+        navbarToggle.addEventListener('click', () => {
+            navbarMenu.classList.toggle('active');
+        });
+        
+        // Back to Top Button
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if (this.getAttribute('href') === '#') return;
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - PDF Editor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .main-content {
+            align-items: flex-start;
+        }
+        
+        .container {
+            background-color: #1f1f3a;
+            text-align: left;
+        }
+        
+        .page-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #b0b0b0;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+        
+        .about-section {
+            margin-bottom: 40px;
+        }
+        
+        .about-section h2 {
+            color: #00b4ab;
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+            border-bottom: 1px solid #333355;
+            padding-bottom: 10px;
+        }
+        
+        .about-section p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+            color: #e1e1e1;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .feature-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #272744;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-icon {
+            margin-right: 15px;
+            font-size: 1.5rem;
+            color: #00b4ab;
+        }
+        
+        .feature-content h3 {
+            margin-bottom: 5px;
+            color: #e1e1e1;
+            font-size: 1.2rem;
+        }
+        
+        .feature-content p {
+            color: #b0b0b0;
+            font-size: 0.95rem;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        
+        .tech-item {
+            background-color: #272744;
+            border-radius: 50px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            color: #e1e1e1;
+        }
+        
+        .version-info {
+            background-color: #272744;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #b0b0b0;
+        }
+        
+        .version-info p {
+            margin-bottom: 5px;
+        }
+        
+        .version-info p:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            📄 <span>PDF Editor</span>
+        </a>
+        <button class="navbar-toggle" id="navbarToggle">☰</button>
+        <ul class="navbar-menu" id="navbarMenu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="help.html">Help</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>About PDF Editor</h1>
+                <p class="subtitle">A powerful yet simple tool for managing your PDF documents</p>
+            </div>
+            
+            <div class="about-section">
+                <h2>What is PDF Editor?</h2>
+                <p>
+                    PDF Editor is a web-based application designed to make PDF management simple and efficient. 
+                    Created in 2025, our tool provides essential PDF manipulation functionalities without the 
+                    need for expensive software or complex installations.
+                </p>
+                <p>
+                    Whether you need to combine multiple PDF documents into one file or extract specific pages 
+                    from a larger document, PDF Editor offers a user-friendly interface to handle these tasks quickly 
+                    and with minimal effort.
+                </p>
+            </div>
+            
+            <div class="about-section">
+                <h2>Key Features</h2>
+                <ul class="feature-list">
+                    <li>
+                        <div class="feature-icon">🔄</div>
+                        <div class="feature-content">
+                            <h3>PDF Merging</h3>
+                            <p>Combine multiple PDFs into a single document with just a few clicks.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feature-icon">✂️</div>
+                        <div class="feature-content">
+                            <h3>PDF Splitting</h3>
+                            <p>Extract specific pages or ranges from a PDF document.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feature-icon">📱</div>
+                        <div class="feature-content">
+                            <h3>Responsive Design</h3>
+                            <p>Works on desktop, tablet, and mobile devices.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feature-icon">🔒</div>
+                        <div class="feature-content">
+                            <h3>Privacy First</h3>
+                            <p>All processing happens in your browser. Files never leave your device.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feature-icon">🌙</div>
+                        <div class="feature-content">
+                            <h3>Dark Mode</h3>
+                            <p>Easy on the eyes with a beautiful dark theme interface.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="about-section">
+                <h2>Technology Stack</h2>
+                <p>PDF Editor is built using modern web technologies:</p>
+                <div class="tech-stack" style="justify-content: center;">
+                    <span class="tech-item">JavaScript</span>
+                    <span class="tech-item">HTML5</span>
+                    <span class="tech-item">CSS3</span>
+                </div>
+                
+                <div class="version-info">
+                    <p><strong>Version:</strong> 1.1.0</p>
+                    <p><strong>Last Updated:</strong> March 21, 2025</p>
+                    <p><strong>Developer:</strong> PDF Editor Team</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->    <!-- Footer -->
+    <footer class="footer" align="center">
+            <div class="footer-content">
+                <h5 class="copyright">© 2025 PDF Editor. All rights reserved.</h5>
+            </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Navbar Toggle Script
+        const navbarToggle = document.getElementById('navbarToggle');
+        const navbarMenu = document.getElementById('navbarMenu');
+        
+        navbarToggle.addEventListener('click', () => {
+            navbarMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

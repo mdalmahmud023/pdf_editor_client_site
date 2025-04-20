@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Editor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/png" href="/images/logo_web.png"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            📄 <span>PDF Editor</span>
+        </a>
+        <button class="navbar-toggle" id="navbarToggle">☰</button>
+        <ul class="navbar-menu" id="navbarMenu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="help.html">Help</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <h1>PDF Editor</h1>
+            <p class="subtitle">Merge or split PDF files with ease</p>
+            
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tab active" data-tab="merge">Merge PDFs</div>
+                <div class="tab" data-tab="split">Split PDF</div>
+            </div>
+            
+            <!-- Merge PDF Tab Content -->
+            <div class="tab-content active" id="merge-tab">
+                <p class="subtitle">Select multiple PDF files to merge them into a single document</p>
+                
+                <div class="upload-container" id="mergeUploadContainer">
+                    <div class="upload-icon">📁</div>
+                    <p class="upload-text">Drag & drop PDF files here or click to browse</p>
+                    <p class="upload-hint">Only PDF files are accepted</p>
+                    <input type="file" id="mergeFileInput" accept=".pdf" multiple>
+                </div>
+                
+                <div class="selected-files hidden" id="mergeSelectedFiles">
+                    <!-- Selected files will appear here dynamically -->
+                </div>
+                
+                <div class="error-message" id="mergeErrorMessage"></div>
+                
+                <button class="submit-btn" id="mergeSubmitBtn" disabled>Merge PDFs</button>
+            </div>
+            
+            <!-- Split PDF Tab Content -->
+            <div class="tab-content" id="split-tab">
+                <p class="subtitle">Upload a PDF file and extract specific pages or page ranges</p>
+                
+                <div class="upload-container" id="splitUploadContainer">
+                    <div class="upload-icon">📄</div>
+                    <p class="upload-text">Drag & drop a PDF file here or click to browse</p>
+                    <p class="upload-hint">Only PDF files are accepted</p>
+                    <input type="file" id="splitFileInput" accept=".pdf">
+                </div>
+                
+                <div class="selected-file hidden" id="splitSelectedFile">
+                    <!-- Selected file info will appear here -->
+                </div>
+                
+                <div class="pdf-info hidden" id="pdfInfo">
+                    <p>Total pages: <span id="totalPages">0</span></p>
+                </div>
+                
+                <div class="extraction-options hidden" id="pageOptionsContainer">
+                    <h3>Page Extraction Options</h3>
+                    
+                    <div class="radio-options">
+                        <label class="radio-option active" id="customRangeOption">
+                            <input type="radio" name="extractionType" value="customRange" checked>
+                            <div class="radio-option-content">
+                                <div class="radio-option-title">Custom Page Selection</div>
+                                <div class="radio-option-description">Extract specific pages or page ranges</div>
+                                
+                                <div id="customRangeContent">
+                                    <div class="form-group" style="margin-top: 10px;">
+                                        <input type="text" class="form-control" id="pages" placeholder="e.g., 1,3,5-7,10-15">
+                                        <p class="form-instructions">
+                                            <strong>Page Range Examples:</strong><br>
+                                            - Single pages: 1,3,5<br>
+                                            - Page ranges: 1-5 (extracts pages 1,2,3,4,5)<br>
+                                            - Combine both: 1,3,5-7,10-15
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                        
+                        <label class="radio-option" id="allPagesOption">
+                            <input type="radio" name="extractionType" value="allPages">
+                            <div class="radio-option-content">
+                                <div class="radio-option-title">Extract All Pages</div>
+                                <div class="radio-option-description">Extract all pages as separate PDF files</div>
+                                <input type="hidden" id="extractAll" value="false">
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="error-message" id="splitErrorMessage"></div>
+                
+                <button class="submit-btn" id="splitSubmitBtn" disabled>Split PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading overlay -->
+    <div class="loading-overlay hidden" id="loadingOverlay">
+        <div class="loader"></div>
+        <p>Processing your files...</p>
+    </div>
+
+    <div class="loading-message animate__animated animate__fadeIn">
+        <div class="processing-text">Processing your files...</div>
+        <div class="loading-progress">
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://unpkg.com/downloadjs@1.4.7/download.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        // Initialize AOS library
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out'
+            });
+        });
+    </script>
+</body>
+</html>
