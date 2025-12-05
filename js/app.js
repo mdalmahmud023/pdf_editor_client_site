@@ -73,6 +73,24 @@ function loadScript(url) {
     });
 }
 
+/**
+ * Download data as a file
+ * @param {Blob|Uint8Array} data - The data to download
+ * @param {string} filename - The filename
+ * @param {string} mimeType - The MIME type
+ */
+function download(data, filename, mimeType) {
+    const blob = data instanceof Blob ? data : new Blob([data], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
 // =========================================
 // Loading Overlay Controller
 // =========================================
@@ -137,7 +155,7 @@ function setupDragAndDrop(container, onDrop, onError) {
         container.classList.remove('drag-over');
 
         const files = Array.from(e.dataTransfer.files);
-        const pdfFiles = files.filter(file => file.type === 'application/pdf');
+        const pdfFiles = files.filter(file => file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'));
 
         if (pdfFiles.length === 0) {
             onError('Only PDF files are allowed.');
@@ -777,7 +795,7 @@ function initMergeController() {
     let selectedFiles = [];
 
     fileInput.addEventListener('change', () => {
-        const newFiles = Array.from(fileInput.files).filter(f => f.type === 'application/pdf');
+        const newFiles = Array.from(fileInput.files).filter(f => f.type === 'application/pdf' || f.name.toLowerCase().endsWith('.pdf'));
         selectedFiles = [...selectedFiles, ...newFiles];
         fileInput.value = '';
         updateUI();
@@ -949,12 +967,12 @@ function initMergeController() {
 }
 
 /**
+ * Initialize split PDF functionality
+ */
 function initSplitController() {
     const fileInput = document.getElementById('splitFileInput');
     if (!fileInput) return;
 
-    const uploadContainer = document.getElementById('splitUploadContainer');
-    const fileInput = document.getElementById('splitFileInput');
     const uploadContainer = document.getElementById('splitUploadContainer');
     const selectedFileContainer = document.getElementById('splitSelectedFile');
     const submitBtn = document.getElementById('splitSubmitBtn');
@@ -1054,7 +1072,7 @@ function initSplitController() {
     async function handleFileSelection() {
         if (fileInput.files.length > 0) {
             const file = fileInput.files[0];
-            if (file.type === 'application/pdf') {
+            if (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')) {
                 selectedFile = file;
                 await processSelectedFile();
             } else {
