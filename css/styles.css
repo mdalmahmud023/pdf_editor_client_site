@@ -53,9 +53,9 @@
 /* Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
 
-    *,
-    *::before,
-    *::after {
+    *:not(.particle),
+    *:not(.particle)::before,
+    *:not(.particle)::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
@@ -92,17 +92,18 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    z-index: 5;
     pointer-events: none;
     overflow: hidden;
 }
 
 .particle {
     position: absolute;
-    background: white;
+    background: rgba(0, 255, 136, 0.8);
     border-radius: 50%;
+    opacity: 0;
     pointer-events: none;
-    box-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
+    box-shadow: 0 0 6px rgba(0, 255, 136, 0.6), 0 0 12px rgba(0, 255, 136, 0.4);
 }
 
 .gradient-sphere {

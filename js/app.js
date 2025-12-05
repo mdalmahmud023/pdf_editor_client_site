@@ -1182,73 +1182,78 @@ function initTabs() {
 function initParticles() {
     // Create particle effect
     const particlesContainer = document.getElementById('particles-container');
-    if (!particlesContainer) return;
+    if (!particlesContainer) {
+        console.log('Particles container not found');
+        return;
+    }
+    
+    console.log('Initializing particles...');
 
     const particleCount = 80;
 
     // Create particles
     for (let i = 0; i < particleCount; i++) {
-        createParticle();
+        createParticle(i);
     }
 
-    function createParticle() {
+    function createParticle(index) {
         const particle = document.createElement('div');
         particle.className = 'particle';
 
         // Random size (small)
-        const size = Math.random() * 3 + 1;
+        const size = Math.random() * 4 + 2;
         particle.style.width = `${size}px`;
         particle.style.height = `${size}px`;
 
-        // Initial position
-        resetParticle(particle);
+        // Random position
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        particle.style.left = `${posX}%`;
+        particle.style.top = `${posY}%`;
+        
+        // Start visible immediately with staggered timing
+        const initialDelay = (index / particleCount) * 2000; // Stagger over 2 seconds
+        setTimeout(() => {
+            particle.style.opacity = (Math.random() * 0.5 + 0.3).toString();
+        }, initialDelay);
 
         particlesContainer.appendChild(particle);
 
         // Animate
-        animateParticle(particle);
+        animateParticle(particle, posX, posY, initialDelay);
     }
 
-    function resetParticle(particle) {
-        // Random position
-        const posX = Math.random() * 100;
-        const posY = Math.random() * 100;
-
-        particle.style.left = `${posX}%`;
-        particle.style.top = `${posY}%`;
-        particle.style.opacity = '0';
-
-        return {
-            x: posX,
-            y: posY
-        };
-    }
-
-    function animateParticle(particle) {
-        // Initial position
-        const pos = resetParticle(particle);
-
+    function animateParticle(particle, startX, startY, initialDelay) {
         // Random animation properties
         const duration = Math.random() * 10 + 10;
-        const delay = Math.random() * 5;
 
-        // Animate with GSAP-like timing
         setTimeout(() => {
             particle.style.transition = `all ${duration}s linear`;
-            particle.style.opacity = Math.random() * 0.3 + 0.1;
-
+            
             // Move in a slight direction
-            const moveX = pos.x + (Math.random() * 20 - 10);
-            const moveY = pos.y - Math.random() * 30; // Move upwards
+            const moveX = startX + (Math.random() * 20 - 10);
+            const moveY = startY - Math.random() * 30; // Move upwards
 
             particle.style.left = `${moveX}%`;
             particle.style.top = `${moveY}%`;
 
             // Reset after animation completes
             setTimeout(() => {
-                animateParticle(particle);
+                // Reset position
+                const newX = Math.random() * 100;
+                const newY = Math.random() * 100 + 20; // Start lower
+                particle.style.transition = 'none';
+                particle.style.left = `${newX}%`;
+                particle.style.top = `${newY}%`;
+                particle.style.opacity = '0';
+                
+                // Small delay then animate again
+                setTimeout(() => {
+                    particle.style.opacity = (Math.random() * 0.5 + 0.3).toString();
+                    animateParticle(particle, newX, newY, 0);
+                }, 100);
             }, duration * 1000);
-        }, delay * 1000);
+        }, initialDelay);
     }
 
     // Mouse interaction
@@ -1306,13 +1311,15 @@ function initParticles() {
 // =========================================
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize particles first (independent of other modules)
+    initParticles();
+    
     LoadingOverlay.init();
     PagePreview.init();
     initNavigation();
     initTabs();
     initMergeController();
     initSplitController();
-    initParticles();
 
     const container = document.querySelector('.container');
     container?.classList.add('fade-in');
